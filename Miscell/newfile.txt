@@ -1,0 +1,56 @@
+
+    path('login/',
+         LoginView.as_view
+         (
+             template_name='app/login.html',
+             authentication_form=forms.BootstrapAuthenticationForm,
+             extra_context=
+             {
+                 'title': 'Log in',
+                 'year' : datetime.now().year
+             }
+         ),
+         name='login'),
+
+
+
+
+
+
+
+         class ProductCreate(LoginRequiredMixin, CreateView):
+    model = Products
+    fields = ['title', 'description', 'complete']
+    success_url = reverse_lazy('products')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(TaskCreate, self).form_valid(form)
+
+
+class ProductUpdate(LoginRequiredMixin, UpdateView):
+    model = Task
+    fields = ['title', 'description', 'complete']
+    success_url = reverse_lazy('products')
+
+
+class DeleteProduct(LoginRequiredMixin, DeleteView):
+    model = Task
+    context_object_name = 'products'
+    success_url = reverse_lazy('products')
+    def get_queryset(self):
+        owner = self.request.user
+        return self.model.objects.filter(user=owner)
+
+
+class ProductsReorder(View):
+    def post(self, request):
+        form = PositionForm(request.POST)
+
+        if form.is_valid():
+            positionList = form.cleaned_data["position"].split(',')
+
+            with transaction.atomic():
+                self.request.user.set_task_order(positionList)
+
+        return redirect(reverse_lazy('products'))

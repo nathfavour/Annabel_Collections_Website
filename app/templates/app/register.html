@@ -1,0 +1,11 @@
+{% extends 'app/layout.html' %}
+{% block content %}
+<form>
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input style=" margin:10px 0 0 0; " type="submit" action=" /" class=" btn btn-primary"  value=" register"/>
+
+</form>
+<br/>
+<p>Already have an account? <a href=" {% url 'login' %}" style=" margin: 0 auto 0 auto;">Login</a></p>
+{% endblock content %}

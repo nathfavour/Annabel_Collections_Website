@@ -1,0 +1,28 @@
+{% extends ' app/cart.html ' %}
+{% block content %}
+
+<nav>
+    <form action=" /" method=" get" class=" form-inline mt-2 mt-md-0">
+        <input id=" q" name=" q" value=" {{ request.GET.q}}" class=" form-control mr-sm-2" type=" text" placeholder=" Search" aria-label="Search" />
+        <button class=" btn btn-outline-success my-2 my-sm-0" type="submit" >  Search   </button>
+    </form>
+</nav>
+{% for category in categories %}
+<div class=" jumbotron ">
+</div>
+<div class=" row ">
+
+    <h1 class=" display-3"> {{ Products.name }} </h1>
+    <div class=" display-3"> {{ Products.image }} </div>
+    <div class=" lead"> {{ Products.description }} </div>
+    <div class=" lead"> {{ Products.price }} </div>
+
+</div>
+
+
+{% end for %}
+
+
+{%  endblock %}
+
+

@@ -1,0 +1,25 @@
+{% extends 'app/layout.html' %}
+{% block content %}
+
+
+<!--<nav>
+    <form action=" /" method=" get" class=" form-inline mt-2 mt-md-0">
+        <input id=" q" name=" q" value=" {{ request.GET.q}}" class=" form-control mr-sm-2" type=" text" placeholder=" Search" aria-label="Search" />
+        <button class=" btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+
+{% for product in products %}
+<a href="/product/{{product.id}}/">{{product.name}}</a><br />
+{% endfor %}-->
+
+<form method="POST" action="{% url 'product_list' %}">
+    {% csrf_token %}
+    {% for product in products %}
+    <input type="checkbox" name="product_id" value="{{product.id}}" {% if product.ticked %}checked{% endif %}
+           <label>{{ product.name }}</label><br />
+    {% endfor %}
+    <button type="submit">Update Cart</button>
+</form>
+
+{%    endblock content    %}
